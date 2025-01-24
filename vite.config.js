@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'https://empworkspace.onrender.com',
+      '/api': 'https://employeewsbackend.onrender.com',
     },
   },
 })
