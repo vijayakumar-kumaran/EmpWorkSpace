@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { CssBaseline, ThemeProvider, Box } from '@mui/material';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import {API_URL} from './Config';
 
 // Components
 import theme from './theme/theme';
@@ -45,8 +44,10 @@ import { setUser, clearUser } from './redux/slices/userSlice';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(true);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn');
@@ -78,10 +79,17 @@ function App() {
       <Router>
         {isLoggedIn && <Navbar onLogout={handleLogout} />}
         <div style={{ display: 'flex' }}>
-          {isLoggedIn && user?.role === 'admin' && <Sidebar />}
-          {isLoggedIn && user?.role === 'employee' && <EmployeeSidebar />}
+          {isLoggedIn && user?.role === 'admin' && <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar}/>}
+          {isLoggedIn && user?.role === 'employee' && <EmployeeSidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar}/>}
 
-          <Box sx={{ flexGrow: 1, padding: 2 }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              padding: 2,
+              transition: 'margin-left 0.5s ease-in-out',
+              marginLeft: openSidebar ? "280px":"5px"
+            }}
+          >
             <Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 <Route
