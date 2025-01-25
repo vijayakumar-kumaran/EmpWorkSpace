@@ -7,7 +7,7 @@ import {
   IconButton,
   Avatar,
   Popover,
-  Tooltip, // Import Tooltip
+  Tooltip, 
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/ExitToApp';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -75,9 +75,7 @@ const Navbar = ({ onLogout }) => {
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         {/* Logo and Title */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
-            My App
-          </Typography>
+         
         </Box>
 
         {/* Profile, Notification, and Logout */}
