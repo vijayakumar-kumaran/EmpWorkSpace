@@ -17,11 +17,13 @@ import TaskIcon from '@mui/icons-material/Assignment';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import WorkIcon from '@mui/icons-material/Work';
 import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
+
 import { useSelector } from 'react-redux';
-const EmployeeSidebar = () => {
+
+const EmployeeSidebar = ({openSidebar, setOpenSidebar}) => {
   const [openTask, setOpenTask] = useState(false);
   const [openLeave, setOpenLeave] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(true);
   const user = useSelector((state)=> state.user)
   const handleClickTask = () => {
     setOpenTask((prev) => !prev);
@@ -41,23 +43,27 @@ const EmployeeSidebar = () => {
       <IconButton
         onClick={toggleSidebar}
         sx={{
-          position: 'absolute',
-          top: 20,
-          left: 20,
-          zIndex: 1000,
-          color: '#fff',
-          display: openSidebar ? 'none' : 'block',
+          position: 'fixed',
+          top: '16px', 
+          left: openSidebar ? '260px' : '16px', 
+          zIndex: 2000, // Higher z-index to place above all elements
+          color: '#fff', // Button color
+          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)', // Darker on hover
+          },
+          transition: 'left 0.3s ease-in-out', // Smooth transition when toggling
         }}
       >
-        <MenuIcon />
+        {openSidebar ? <ChevronLeftOutlinedIcon /> : <MenuIcon />}
       </IconButton>
 
       <Drawer
         sx={{
-          width: openSidebar ? 280 : 0,
+          width: openSidebar ? 0 : 5,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: openSidebar ? 280 : 0,
+            width: openSidebar ? 280 : 72,
             boxSizing: 'border-box',
             padding: '20px',
             background: 'linear-gradient(180deg, rgb(65, 56, 74), rgb(49, 52, 59))',
@@ -65,9 +71,24 @@ const EmployeeSidebar = () => {
             border: 'none',
             boxShadow: '2px 0px 10px rgba(0, 0, 0, 0.2)',
             transition: 'width 0.3s ease-in-out',
+            overflowY: 'hidden',
+            '&::-webkit-scrollbar': {
+              width: '4px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: 'rgba(255, 255, 255, 0.4)',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: 'rgba(255, 255, 255, 0.6)',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: 'rgba(0, 0, 0, 0.2)',
+              borderRadius: '10px',
+            },
           },
         }}
-        variant="permanent"
+        variant="persistent"
         anchor="left"
         open={openSidebar}
       >
